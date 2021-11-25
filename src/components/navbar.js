@@ -1,13 +1,12 @@
 import React,{useState,useEffect} from "react";
-
 function Navbar() {
     return (
     <header id="header" className="header fixed-top d-flex align-items-center">
 
     <div className="d-flex align-items-center justify-content-between">
       <a href="index.html" className="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="" />
-        <span className="d-none d-lg-block">Planner</span>
+        <img src="/assets/planner_Logo.png" alt="Planner"/>
+        {/* <span className="d-none d-lg-block">Planner</span> */}
       </a>
       <i className="bi bi-list toggle-sidebar-btn"></i>
     </div>
@@ -106,7 +105,7 @@ function Navbar() {
         <li className="nav-item dropdown pe-3">
 
           <a className="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="./profile.png" alt="Profile" className="rounded-circle" />
+            <img src="/assets/profile.png" alt="Profile" className="rounded-circle" />
             <span className="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
           </a>
 
