@@ -10,7 +10,14 @@ function Sidebar() {
           <li className="nav-item">
             <a className="nav-link " href="index.html">
               <i className="bi bi-grid"></i>
-              <span>Dashboard</span>
+              <span>Challenge</span>
+            </a>
+          </li>
+
+          <li className="nav-item">
+            <a className="nav-link " href="index.html">
+              <i className="bi bi-grid"></i>
+              <span>Vote Ideas</span>
             </a>
           </li>
         
