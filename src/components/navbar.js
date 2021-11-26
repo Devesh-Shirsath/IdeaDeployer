@@ -1,5 +1,21 @@
 import React,{useState,useEffect} from "react";
 function Navbar() {
+    const select = (el, all = false) => {
+        el = el.trim()
+        if (all) {
+          return [...document.querySelectorAll(el)]
+        } else {
+          return document.querySelector(el)
+        }
+    }
+
+    const toggleCheck = () => {
+        select('body').classList.toggle('toggle-sidebar');
+    }
+
+    const searchToggle = () => {
+        select('.search-bar').classList.toggle('search-bar-show');
+    }
     return (
     <header id="header" className="header fixed-top d-flex align-items-center">
 
@@ -8,7 +24,7 @@ function Navbar() {
         <img src="/assets/planner_Logo.png" alt="Planner"/>
         {/* <span className="d-none d-lg-block">Planner</span> */}
       </a>
-      <i className="bi bi-list toggle-sidebar-btn"></i>
+      <i className="bi bi-list toggle-sidebar-btn" onClick={toggleCheck}></i>
     </div>
 
     <div className="search-bar">
@@ -22,7 +38,7 @@ function Navbar() {
       <ul className="d-flex align-items-center">
 
         <li className="nav-item d-block d-lg-none">
-          <a className="nav-link nav-icon search-bar-toggle " href="#">
+          <a className="nav-link nav-icon search-bar-toggle " href="#" onClick={searchToggle}>
             <i className="bi bi-search"></i>
           </a>
         </li>
