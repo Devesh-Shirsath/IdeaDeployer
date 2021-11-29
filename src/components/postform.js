@@ -24,16 +24,6 @@ function PostForm() {
                                 </div>
                             </div>
                         </form>
-                        <form>
-                            <div className="form-group">
-                                <label htmlFor="recipient-name" className="col-form-label">Title:</label>
-                                <input type="text" className="form-control" id="recipient-name" />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="message-text" className="col-form-label">Description:</label>
-                                <textarea className="form-control" id="message-text"></textarea>
-                            </div>
-                        </form>
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Discard</button>
@@ -46,3 +36,14 @@ function PostForm() {
 }
 
 export default PostForm;
+
+{/* <form>
+<div className="form-group">
+    <label htmlFor="recipient-name" className="col-form-label">Title:</label>
+    <input type="text" className="form-control" id="recipient-name" />
+</div>
+<div className="form-group">
+    <label htmlFor="message-text" className="col-form-label">Description:</label>
+    <textarea className="form-control" id="message-text"></textarea>
+</div>
+</form> */}
