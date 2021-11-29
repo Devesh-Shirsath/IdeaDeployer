@@ -1,20 +1,19 @@
 import React from 'react';
 import './App.css';
-// import Main from './components/main';
-// import Navbar from './components/navbar';
-// import Sidebar from './components/sidebar';
-import WriteUserData from './firebase';
+import { BrowserRouter as Router, Switch, Route } from 'react-router';
+import Main from './components/main';
+import Navbar from './components/navbar';
+import Sidebar from './components/sidebar';
+import PostForm from './components/postform';
 
 function App() {
   return (
-    <div className="App">
-
-      {WriteUserData(16, "jrd", "jrd@gmail.com", "imagejrd.url")}
-
-      {/* <Navbar />
-      <Sidebar />
-      <Main /> */}
-    </div>
+      <div className="App">
+        <Navbar />
+        <Sidebar />
+        <Main />
+        <PostForm />
+      </div>
   );
 }
 export default App;
