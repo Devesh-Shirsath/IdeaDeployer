@@ -14,7 +14,7 @@ function Sidebar() {
         <li className="nav-item">
           <Link className="nav-link collapsed" to="/">
             <i className="bi bi-bar-chart"></i>
-            <span>Challenge</span>
+            <span>Challenges</span>
           </Link>
         </li>
 
