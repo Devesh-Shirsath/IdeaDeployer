@@ -1,18 +1,22 @@
 import React from 'react';
 import { firebase } from '../firebase';
 
-const Auth = () => {
-    const signIn = async () => {
-        var google_provider = new firebase.auth.GoogleAuthProvider();
-        await firebase.auth().signInWithPopup(google_provider)
+function Auth() {
+    const signInWithGoogle = () => {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        provider.setCustomParameters({
+            prompt: 'select_account'
+        })
+        firebase.auth().signInWithPopup(provider)
         .then((res) => {
             console.log(res)
-        }).catch((err) => {
+        })
+        .catch((err) => {
             console.log(err);
         })
     }
     return(
-        <button onClick={signIn}>Sign Up</button>
+        <button onClick={signInWithGoogle}>Sign Up</button>
     )
 }
 
