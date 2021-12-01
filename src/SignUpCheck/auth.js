@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { firebase } from '../firebase';
 
-function Auth() {
+function Auth(props) {
     const signInWithGoogle = () => {
         const provider = new firebase.auth.GoogleAuthProvider();
         provider.setCustomParameters({
@@ -9,12 +9,13 @@ function Auth() {
         })
         firebase.auth().signInWithPopup(provider)
         .then((res) => {
-            console.log(res)
+            props.setUserDetails(res);
         })
         .catch((err) => {
             console.log(err);
         })
     }
+
     return(
         <button onClick={signInWithGoogle}>Sign Up</button>
     )

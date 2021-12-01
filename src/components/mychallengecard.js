@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function MyChallengeCard(props) {
   return (
@@ -15,7 +16,7 @@ function MyChallengeCard(props) {
 
       <div className="d-flex" style={{ justifyContent: "flex-end" }}>
         <div>
-          <button type="button" className="btn btn-light">Post Idea</button>
+        <Link className="btn btn-light" to={`/${props.title}/ideas`}>See Ideas</Link>
         </div>
       </div>
     </div>

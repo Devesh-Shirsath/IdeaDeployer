@@ -6,7 +6,7 @@ function Contact() {
             <div className="card">
                 <div className="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                    <img src="/assets/profile.png" alt="Profile" className="rounded-circle" />
+                    <img src="/assets/jyotiraj.jpg" alt="Profile" className="rounded-circle" />
                     <h2>Jyotiraj Dixit</h2>
                     <h3>SDE Intern @CuriousJr</h3>
                     <div className="social-links mt-2">

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import MyChallengeCard from "./mychallengecard";
 import firebaseDb from "../firebase";
+import SelectedChallengeIdeaCard from "./selectedchallengeideascard";
 
-const MyChallengeSection = (props) => {
+const SelectedChallengeIdeaSection = (props) => {
     var [mychallengeObjects, setmychallengeObjects] = useState({})
     var [currentId, setCurrentId] = useState('')
 
@@ -52,7 +52,7 @@ const MyChallengeSection = (props) => {
                                         <li><a className="dropdown-item" onClick={() => { onDelete(id) }}><i className="bi bi-trash"></i>Delete</a></li>
                                     </ul>
                                 </div>
-                                <MyChallengeCard
+                                <SelectedChallengeIdeaCard
                                     title={mychallengeObjects[id].title}
                                     ideaCount={mychallengeObjects[id].ideaCount}
                                     timeLeft={mychallengeObjects[id].timeLeft}
@@ -68,4 +68,4 @@ const MyChallengeSection = (props) => {
     );
 }
 
-export default MyChallengeSection;
+export default SelectedChallengeIdeaSection;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function VoteCard(props) {
+function SelectedChallengeIdeaCard(props) {
   return (
     <div className="card-body">
       <h5 className="card-title">{props.title}  <span className="text-danger small pt-1 fw-bold"> • Voting </span> <span> <br />{props.creator} • Challenge • {props.timeLeft} • {props.ideaCount} ideas</span></h5>
@@ -23,4 +23,4 @@ function VoteCard(props) {
   );
 }
 
-export default VoteCard;
+export default SelectedChallengeIdeaCard;

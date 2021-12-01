@@ -9,33 +9,47 @@ import ChallengeSection from './components/challengesection';
 import MyChallengeSection from './components/mychallengesection';
 import ExecutionSection from './components/executionsection';
 import Contact from './components/contact';
-import PostIdeaForm from './components/votecard';
+import PostIdeaForm from './components/postideaform';
 import Auth from './SignUpCheck/auth';
 import { firebase } from './firebase';
+import VoteSection from './components/votesection';
+import SelectedChallengeIdeaSection from './components/selectedchallengeideasection';
 
 function App() {
-
+  const [userDetails, setUserDetails] = useState({
+    uid: '',
+    displayName: '',
+    photoURL: ''
+  });
   const [signedIn, setSignedIn] = useState(false);
+  var [currentId, setCurrentId] = useState(false);
 
   firebase.auth().onAuthStateChanged((user) => {
-    if(user) return setSignedIn(true);
+    if(user){
+      setUserDetails(user);
+      return setSignedIn(true);
+    }
     setSignedIn(false);
   })
 
+  
   if (signedIn === true) {
+    console.log(userDetails)
     return (
       <Router>
         <div className="App">
-          <Navbar />
-          <Sidebar />
+          <Navbar displayName={userDetails.displayName} photoURL={userDetails.photoURL} />
+          <Sidebar displayName={userDetails.displayName} />
 
           <main id="main" className="main">
             <section className="section dashboard profile">
               <div className="row">
                 <Routes>
-                  <Route path="/" exact element={<ChallengeSection />} />
-                  <Route path="/users/Jyotiraj/challenges" exact element={<MyChallengeSection />} />
-                  <Route path="/users/Jyotiraj/execution" exact element={<ExecutionSection />} />
+                  <Route path="/" exact element={<ChallengeSection currentId={currentId} setCurrentId={setCurrentId} />} />
+                  <Route path="/vote_ideas" exact element={<VoteSection />} />
+                  <Route path="/:title/ideas" exact element={<SelectedChallengeIdeaSection />} />
+                  <Route path={`/users/:displayName/challenges`} exact element={<MyChallengeSection userId={userDetails.uid} />} />
+                  <Route path={`/users/:displayName/execution`} exact element={<ExecutionSection />} />
                   <Route path="/contact" exact element={<Contact />} />
                 </Routes>
                 <RightSidebar />
@@ -43,7 +57,7 @@ function App() {
             </section>
           </main>
 
-          <PostForm />
+          <PostForm userId={userDetails.uid} displayName={userDetails.displayName} currentId={currentId} setCurrentId={setCurrentId} />
           <PostIdeaForm />
         </div>
       </Router>
@@ -51,7 +65,7 @@ function App() {
   }
   else {
     return (
-      <Auth />
+      <Auth setUserDetails={setUserDetails} />
     )
   }
 }

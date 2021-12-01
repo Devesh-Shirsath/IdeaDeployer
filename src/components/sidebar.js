@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-function Sidebar() {
+function Sidebar(props) {
   return (
     <aside id="sidebar" className="sidebar">
 
@@ -19,7 +19,7 @@ function Sidebar() {
         </li>
 
         <li className="nav-item">
-          <Link className="nav-link collapsed" to="/name/vote_idea">
+          <Link className="nav-link collapsed" to="/vote_ideas">
             <i className="bi bi-lightbulb"></i>
             <span>Vote Ideas</span>
           </Link>
@@ -30,21 +30,21 @@ function Sidebar() {
         </li>
 
         <li className="nav-item">
-          <Link className="nav-link collapsed" to="/users/Jyotiraj/challenges">
+          <Link className="nav-link collapsed" to={`/users/${props.displayName}/challenges`}>
             <i className="bi bi-bar-chart"></i>
             <span>My Challenge</span>
           </Link>
         </li>
 
         <li className="nav-item">
-          <Link className="nav-link collapsed" to="/users/Jyotiraj/ideas">
+          <Link className="nav-link collapsed" to={`/users/${props.displayName}/ideas`}>
             <i className="bi bi-lightbulb"></i>
             <span>My Ideas</span>
           </Link>
         </li>
 
         <li className="nav-item">
-          <Link className="nav-link collapsed" to="/users/Jyotiraj/execution">
+          <Link className="nav-link collapsed" to={`/users/${props.displayName}/execution`}>
             <i className="bi bi-nut"></i>
             <span>Under Execution</span>
           </Link>

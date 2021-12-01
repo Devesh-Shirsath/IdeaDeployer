@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import firebaseDb from "../firebase";
 
-function PostForm(props) {
+function PostIdeaForm(props) {
     const initialFieldValues = {
-        creator: `${props.displayName}`,
+        creator: 'Jyotiraj',
         title: '',
         ideaCount: 0,
         timeLeft: '2 days',
@@ -13,46 +13,19 @@ function PostForm(props) {
 
     var [values, setValues] = useState(initialFieldValues)
 
-    useEffect(() => {
-        if (props.currentId === false)
-            setValues({
-                ...initialFieldValues
-            })
-        else {
-            firebaseDb.child(`challenges/${props.currentId}`).on('value', snapshot => {
-                if (snapshot.val != null) {
-                    setValues({
-                        ...snapshot.val()
-                    })
-                }
-            })
-        }
-    }, [props.currentId])
-
     const addVal = obj => {
-        if (props.currentId === false) {
-            firebaseDb.child('challenges').push(
-                obj,
-                err => {
-                    if (err) console.log(err)
-                }
-            )
-            firebaseDb.child(`users/${props.userId}/challenges`).push(
-                obj,
-                err => {
-                    if (err) console.log(err)
-                }
-            )
-        }
-        else {
-            firebaseDb.child(`challenges/${props.currentId}`).set(
-                obj,
-                err => {
-                    if (err) console.log(err)
-                }
-            )
-        }
-        props.setCurrentId(false)
+        firebaseDb.child('challenges').push(
+            obj,
+            err => {
+                if (err) console.log(err)
+            }
+        )
+        firebaseDb.child(`users/Jyotiraj/challenges`).push(
+            obj,
+            err => {
+                if (err) console.log(err)
+            }
+        )
     }
 
     const handleInputChange = e => {
@@ -69,11 +42,11 @@ function PostForm(props) {
     }
 
     return (
-        <div className="modal fade" id="postChallenge" tabIndex="-1">
+        <div className="modal fade" id="postIdea" tabIndex="-1">
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title">Post Challenge</h5>
+                        <h5 className="modal-title">Post Idea</h5>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
@@ -89,7 +62,7 @@ function PostForm(props) {
                                         value={values.title}
                                         onChange={handleInputChange}
                                     />
-                                    <label htmlFor="floatingName">Title</label>
+                                    <label htmlFor="floatingName">Idea Title</label>
                                 </div>
                             </div>
                             <div className="col-12">
@@ -119,7 +92,7 @@ function PostForm(props) {
     )
 }
 
-export default PostForm;
+export default PostIdeaForm;
 
 {/* <form>
 <div className="form-group">
