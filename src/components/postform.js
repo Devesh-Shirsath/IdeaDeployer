@@ -30,6 +30,9 @@ function PostForm(props) {
     }, [props.currentId])
 
     const addVal = obj => {
+        var myCurrentDate = new Date();
+        var date = myCurrentDate.getFullYear() + '-' + (myCurrentDate.getMonth()+1) + '-' + myCurrentDate.getDate() +' '+ myCurrentDate.getHours()+':'+ myCurrentDate.getMinutes()+':'+ myCurrentDate.getSeconds();
+        obj.timeStamp = date;
         if (props.currentId === false) {
             firebaseDb.child('challenges').push(
                 obj,
