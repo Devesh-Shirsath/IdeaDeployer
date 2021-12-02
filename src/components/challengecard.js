@@ -15,7 +15,7 @@ function ChallengeCard(props) {
 
       <div className="d-flex" style={{ justifyContent: "flex-end" }}>
         <div>
-          <button type="button" className="btn btn-light" data-bs-toggle="modal" data-bs-target="#postIdea">Post Idea</button>
+          <button type="button" className="btn btn-light" data-bs-toggle="modal" data-bs-target="#postIdea" >Post Idea</button>
         </div>
       </div>
     </div>

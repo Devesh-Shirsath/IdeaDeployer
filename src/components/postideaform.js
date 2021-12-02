@@ -3,24 +3,22 @@ import firebaseDb from "../firebase";
 
 function PostIdeaForm(props) {
     const initialFieldValues = {
-        creator: 'Jyotiraj',
+        creator: `${props.displayName}`,
         title: '',
-        ideaCount: 0,
-        timeLeft: '2 days',
-        description: '',
-        timeStamp: ''
+        likes: 0,
+        description: ''
     }
 
     var [values, setValues] = useState(initialFieldValues)
 
     const addVal = obj => {
-        firebaseDb.child('challenges').push(
+        firebaseDb.child(`challenges/${props.currentId}/ideas`).push(
             obj,
             err => {
                 if (err) console.log(err)
             }
         )
-        firebaseDb.child(`users/Jyotiraj/challenges`).push(
+        firebaseDb.child(`users/${props.userId}/challenges/${props.currentId}/ideas`).push(
             obj,
             err => {
                 if (err) console.log(err)

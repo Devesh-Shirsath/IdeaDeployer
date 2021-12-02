@@ -10,7 +10,7 @@ import MyChallengeSection from './components/mychallengesection';
 import ExecutionSection from './components/executionsection';
 import Contact from './components/contact';
 import PostIdeaForm from './components/postideaform';
-import Auth from './SignUpCheck/auth';
+import HeroPage from './SignUpCheck/HeroPage';
 import { firebase } from './firebase';
 import VoteSection from './components/votesection';
 import SelectedChallengeIdeaSection from './components/selectedchallengeideasection';
@@ -45,7 +45,7 @@ function App() {
             <section className="section dashboard profile">
               <div className="row">
                 <Routes>
-                  <Route path="/" exact element={<ChallengeSection currentId={currentId} setCurrentId={setCurrentId} />} />
+                  <Route path="/" exact element={<ChallengeSection  {...({ currentId , setCurrentId })} />} />
                   <Route path="/vote_ideas" exact element={<VoteSection />} />
                   <Route path="/:title/ideas" exact element={<SelectedChallengeIdeaSection />} />
                   <Route path={`/users/:displayName/challenges`} exact element={<MyChallengeSection userId={userDetails.uid} />} />
@@ -58,14 +58,14 @@ function App() {
           </main>
 
           <PostForm userId={userDetails.uid} displayName={userDetails.displayName} currentId={currentId} setCurrentId={setCurrentId} />
-          <PostIdeaForm />
+          <PostIdeaForm userId={userDetails.uid} displayName={userDetails.displayName} currentId={currentId} setCurrentId={setCurrentId} />
         </div>
       </Router>
     );
   }
   else {
     return (
-      <Auth setUserDetails={setUserDetails} />
+      <HeroPage setUserDetails={setUserDetails} />
     )
   }
 }

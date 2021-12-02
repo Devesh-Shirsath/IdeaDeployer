@@ -31,7 +31,7 @@ class Navbar extends React.Component {
 
                 <div className="d-flex align-items-center justify-content-between">
                     <a href="index.html" className="logo d-flex align-items-center">
-                        <img src="/assets/planner_Logo.png" alt="Planner" />
+                        <img src="/assets/planner_logo.png" alt="Planner" />
                     </a>
                     <i className="bi bi-list toggle-sidebar-btn" onClick={this.toggleCheck}></i>
                 </div>
