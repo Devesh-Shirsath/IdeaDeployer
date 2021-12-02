@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/navbar';
@@ -23,16 +23,33 @@ function App() {
   });
   const [signedIn, setSignedIn] = useState(false);
   var [currentId, setCurrentId] = useState(false);
+  var [loading, setLoading] = useState(true);
 
   firebase.auth().onAuthStateChanged((user) => {
-    if(user){
+    if (user) {
       setUserDetails(user);
       return setSignedIn(true);
     }
     setSignedIn(false);
   })
 
-  
+  useEffect(() => {
+    setLoading(false);
+  })
+
+  if (loading === true) {
+    return (
+      <section id="hero" className="d-flex align-items-center">
+        <div className="container position-relative">
+          <div className="row justify-content-center">
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
   if (signedIn === true) {
     console.log(userDetails)
     return (
@@ -45,7 +62,7 @@ function App() {
             <section className="section dashboard profile">
               <div className="row">
                 <Routes>
-                  <Route path="/" exact element={<ChallengeSection  {...({ currentId , setCurrentId })} />} />
+                  <Route path="/" exact element={<ChallengeSection  {...({ currentId, setCurrentId })} />} />
                   <Route path="/vote_ideas" exact element={<VoteSection />} />
                   <Route path="/:title/ideas" exact element={<SelectedChallengeIdeaSection />} />
                   <Route path={`/users/:displayName/challenges`} exact element={<MyChallengeSection userId={userDetails.uid} />} />

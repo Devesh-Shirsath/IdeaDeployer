@@ -28,7 +28,7 @@ function HeroPage(props) {
           <h1 className="logo"><img src="/assets/planner_icon.png" alt="Planner" /><a href="index.html">Planner</a></h1>
 
           <nav id="navbar" className="navbar">
-            <a className="getstarted scrollto" onClick={signInWithGoogle}>Sign Up</a>
+            <a className="getstarted scrollto" onClick={signInWithGoogle} style={{cursor:"pointer"}}>Sign Up</a>
           </nav>
 
         </div>
@@ -43,7 +43,7 @@ function HeroPage(props) {
             </div>
           </div>
           <div className="text-center">
-            <a onClick={signInWithGoogle} className="btn-get-started scrollto">Sign Up</a>
+            <a onClick={signInWithGoogle} className="btn-get-started scrollto" style={{cursor:"pointer"}}>Sign Up</a>
           </div>
 
           <div className="row icon-boxes">
