@@ -25,6 +25,7 @@ const ChallengeSection = (props) => {
                     if (err) console.log(err)
                 }
             )
+            props.setCurrentId(false);
         }
     }
 
@@ -36,7 +37,6 @@ const ChallengeSection = (props) => {
                         <div className="col-12">
                             <div className="card">
                                 <div className="filter">
-                                    <i className="icon bi bi-heart" ></i>
                                     <a className="icon" data-bs-toggle="dropdown"><i className="bi bi-three-dots"></i></a>
                                     <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                         <li><a className="dropdown-item" onClick={() => { props.setCurrentId(id)}} data-bs-toggle="modal" data-bs-target="#postChallenge"><i className="bi bi-pencil"></i>Edit</a></li>
@@ -44,10 +44,12 @@ const ChallengeSection = (props) => {
                                     </ul>
                                 </div>
                                 <ChallengeCard
+                                    cardId={id}
+                                    updateCurrentId={(cid) => {props.setCurrentId(cid)}}
                                     creator={challengeObjects[id].creator}
                                     title={challengeObjects[id].title}
                                     ideaCount={challengeObjects[id].ideaCount}
-                                    timeLeft={challengeObjects[id].timeLeft}
+                                    timeStamp={challengeObjects[id].timeStamp}
                                     description={challengeObjects[id].description}
                                 />
                             </div>

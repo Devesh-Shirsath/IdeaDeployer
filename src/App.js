@@ -19,11 +19,13 @@ function App() {
   const [userDetails, setUserDetails] = useState({
     uid: '',
     displayName: '',
-    photoURL: ''
+    photoURL: '',
+    email: ''
   });
   const [signedIn, setSignedIn] = useState(false);
   var [currentId, setCurrentId] = useState(false);
   var [loading, setLoading] = useState(true);
+  var [searchTerm, setSearchTerm] = useState('');
 
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -55,18 +57,18 @@ function App() {
     return (
       <Router>
         <div className="App">
-          <Navbar displayName={userDetails.displayName} photoURL={userDetails.photoURL} />
-          <Sidebar displayName={userDetails.displayName} />
+          <Navbar displayName={userDetails.displayName} photoURL={userDetails.photoURL} emailId={userDetails.email} setSearchTerm={setSearchTerm} />
+          <Sidebar displayName={userDetails.displayName} setCurrentId={setCurrentId} />
 
           <main id="main" className="main">
             <section className="section dashboard profile">
               <div className="row">
                 <Routes>
-                  <Route path="/" exact element={<ChallengeSection  {...({ currentId, setCurrentId })} />} />
-                  <Route path="/vote_ideas" exact element={<VoteSection />} />
-                  <Route path="/:title/ideas" exact element={<SelectedChallengeIdeaSection />} />
-                  <Route path={`/users/:displayName/challenges`} exact element={<MyChallengeSection userId={userDetails.uid} />} />
-                  <Route path={`/users/:displayName/execution`} exact element={<ExecutionSection />} />
+                  <Route path="/" exact element={<ChallengeSection  {...({ currentId, setCurrentId, searchTerm })} />} />
+                  <Route path="/vote_ideas" exact element={<VoteSection searchTerm={searchTerm} />} />
+                  <Route path="/:title/ideas" exact element={<SelectedChallengeIdeaSection searchTerm={searchTerm} />} />
+                  <Route path={`/users/:displayName/challenges`} exact element={<MyChallengeSection userId={userDetails.uid} searchTerm={searchTerm} />} />
+                  <Route path={`/users/:displayName/execution`} exact element={<ExecutionSection searchTerm={searchTerm} />} />
                   <Route path="/contact" exact element={<Contact />} />
                 </Routes>
                 <RightSidebar />

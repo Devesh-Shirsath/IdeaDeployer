@@ -6,18 +6,24 @@ function PostForm(props) {
         creator: `${props.displayName}`,
         title: '',
         ideaCount: 0,
-        timeLeft: '2 days',
         description: '',
         timeStamp: ''
     }
 
-    var [values, setValues] = useState(initialFieldValues)
-
+    var [values, setValues] = useState(initialFieldValues);
+    var [counter, setCounter] = useState(0);
+    
     useEffect(() => {
-        if (props.currentId === false)
+        if (props.currentId === false){
             setValues({
                 ...initialFieldValues
             })
+            firebaseDb.child(`users/${props.userId}/challenges/counter`).on('value', snapshot => {
+                if (snapshot.val != null) {
+                    setCounter(snapshot.val())
+                }
+            })
+        }
         else {
             firebaseDb.child(`challenges/${props.currentId}`).on('value', snapshot => {
                 if (snapshot.val != null) {
@@ -33,14 +39,16 @@ function PostForm(props) {
         var myCurrentDate = new Date();
         var date = myCurrentDate.getFullYear() + '-' + (myCurrentDate.getMonth()+1) + '-' + myCurrentDate.getDate() +' '+ myCurrentDate.getHours()+':'+ myCurrentDate.getMinutes()+':'+ myCurrentDate.getSeconds();
         obj.timeStamp = date;
+        setCounter(counter+1);
+
         if (props.currentId === false) {
-            firebaseDb.child('challenges').push(
+            firebaseDb.child(`challenges/${props.userId}${counter}`).set(
                 obj,
                 err => {
                     if (err) console.log(err)
                 }
             )
-            firebaseDb.child(`users/${props.userId}/challenges`).push(
+            firebaseDb.child(`users/${props.userId}/challenges/${props.userId}${counter}`).set(
                 obj,
                 err => {
                     if (err) console.log(err)
@@ -54,8 +62,14 @@ function PostForm(props) {
                     if (err) console.log(err)
                 }
             )
+            firebaseDb.child(`users/${props.userId}/challenges/${props.currentId}`).set(
+                obj,
+                err => {
+                    if (err) console.log(err)
+                }
+            )
+            props.setCurrentId(false)
         }
-        props.setCurrentId(false)
     }
 
     const handleInputChange = e => {
@@ -77,7 +91,7 @@ function PostForm(props) {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">Post Challenge</h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => {props.setCurrentId(false)}}></button>
                     </div>
                     <div className="modal-body">
                         <form className="row g-3" autoComplete="off" onSubmit={handleFormSubmit}>
@@ -110,7 +124,7 @@ function PostForm(props) {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Discard</button>
+                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={() => {props.setCurrentId(false)}}>Discard</button>
                                 <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Post</button>
                             </div>
                         </form>

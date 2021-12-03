@@ -25,7 +25,7 @@ function HeroPage(props) {
       <header id="header" className="header fixed-top d-flex align-items-center">
         <div className="container d-flex align-items-center justify-content-between">
 
-          <h1 className="logo"><img src="/assets/planner_icon.png" alt="Planner" /><a href="index.html">Planner</a></h1>
+          <h1 className="logo"><img src="/assets/planner_icon.png" alt="Planner" /><a>Planner</a></h1>
 
           <nav id="navbar" className="navbar">
             <a className="getstarted scrollto" onClick={signInWithGoogle} style={{cursor:"pointer"}}>Sign Up</a>

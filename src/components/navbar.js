@@ -38,7 +38,7 @@ class Navbar extends React.Component {
 
                 <div className="search-bar">
                     <form className="search-form d-flex align-items-center" method="POST" action="#">
-                        <input type="text" name="query" placeholder="Search" title="Enter search keyword" />
+                        <input type="text" name="query" placeholder="Search" title="Enter search keyword" onChange={(event) => this.props.setSearchTerm(event.target.value)} />
                         <button type="submit" title="Search"><i className="bi bi-search"></i></button>
                     </form>
                 </div>
@@ -55,25 +55,18 @@ class Navbar extends React.Component {
                         <li className="nav-item dropdown pe-3">
 
                             <a className="nav-link nav-profile d-flex align-items-center pe-0" data-bs-toggle="dropdown" style={{cursor:"pointer"}}>
-                                <img src={this.props.photoURL} alt="Profile" className="rounded-circle" />
+                                <img src={this.props.photoURL === '' ? "/assets/profile.png" : this.props.photoURL} alt="Profile" className="rounded-circle" />
                                 <span className="d-none d-md-block dropdown-toggle ps-2">{this.props.displayName}</span>
                             </a>
 
                             <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                                 <li className="dropdown-header">
                                     <h6>{this.props.displayName}</h6>
-                                    <span>Web Designer</span>
+                                    <span>{this.props.emailId}</span>
                                 </li>
 
                                 <li>
                                     <hr className="dropdown-divider" />
-                                </li>
-
-                                <li>
-                                    <a className="dropdown-item d-flex align-items-center" href="users-profile.html">
-                                        <i className="bi bi-person"></i>
-                                        <span>My Profile</span>
-                                    </a>
                                 </li>
 
                                 <li>
