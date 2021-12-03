@@ -23,9 +23,11 @@ function App() {
     email: ''
   });
   const [signedIn, setSignedIn] = useState(false);
-  var [currentId, setCurrentId] = useState(false);
   var [loading, setLoading] = useState(true);
   var [searchTerm, setSearchTerm] = useState('');
+  var [currentId, setCurrentId] = useState('');
+  var [ideaId, setIdeaId] = useState('');
+  var [challengeObjects, setchallengeObjects] = useState({});
 
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -53,7 +55,6 @@ function App() {
     )
   }
   if (signedIn === true) {
-    console.log(userDetails)
     return (
       <Router>
         <div className="App">
@@ -64,10 +65,10 @@ function App() {
             <section className="section dashboard profile">
               <div className="row">
                 <Routes>
-                  <Route path="/" exact element={<ChallengeSection  {...({ currentId, setCurrentId, searchTerm })} />} />
+                  <Route path="/" exact element={<ChallengeSection  {...({ currentId, setCurrentId, challengeObjects, setchallengeObjects, searchTerm })} />} />
                   <Route path="/vote_ideas" exact element={<VoteSection searchTerm={searchTerm} />} />
                   <Route path="/:title/ideas" exact element={<SelectedChallengeIdeaSection searchTerm={searchTerm} />} />
-                  <Route path={`/users/:displayName/challenges`} exact element={<MyChallengeSection userId={userDetails.uid} searchTerm={searchTerm} />} />
+                  <Route path={`/users/:displayName/challenges`} exact element={<MyChallengeSection userId={userDetails.uid} {...({ currentId, setCurrentId, challengeObjects, setchallengeObjects , searchTerm})} />} />
                   <Route path={`/users/:displayName/execution`} exact element={<ExecutionSection searchTerm={searchTerm} />} />
                   <Route path="/contact" exact element={<Contact />} />
                 </Routes>
@@ -76,8 +77,8 @@ function App() {
             </section>
           </main>
 
-          <PostForm userId={userDetails.uid} displayName={userDetails.displayName} currentId={currentId} setCurrentId={setCurrentId} />
-          <PostIdeaForm userId={userDetails.uid} displayName={userDetails.displayName} currentId={currentId} setCurrentId={setCurrentId} />
+          <PostForm userId={userDetails.uid} displayName={userDetails.displayName} currentId={currentId} setCurrentId={setCurrentId} challengeObjects={challengeObjects} />
+          <PostIdeaForm userId={userDetails.uid} displayName={userDetails.displayName} currentId={currentId} setCurrentId={setCurrentId} ideaId={ideaId} setIdeaId={setIdeaId} challengeObjects={challengeObjects} />
         </div>
       </Router>
     );

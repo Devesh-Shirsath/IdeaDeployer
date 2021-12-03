@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 function Sidebar(props) {
@@ -7,7 +7,7 @@ function Sidebar(props) {
 
       <ul className="sidebar-nav" id="sidebar-nav">
         <li className="nav-item">
-          <button type="button" className="btn btn-dark" onClick={() => {props.setCurrentId(false)}} data-bs-toggle="modal" data-bs-target="#postChallenge">
+          <button type="button" className="btn btn-dark" data-bs-toggle="modal" data-bs-target="#postChallenge">
             Post a Challenge
           </button>
         </li>

@@ -1,22 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import ChallengeCard from "./challengecard";
 import firebaseDb from "../firebase";
 
 const ChallengeSection = (props) => {
 
-    var [challengeObjects, setchallengeObjects] = useState('')
-
     useEffect(() => {
         firebaseDb.child('challenges').on('value', snapshot => {
-            if (snapshot.val != null) {
-                setchallengeObjects({
+            if (snapshot.val() != null) {
+                props.setchallengeObjects({
                     ...snapshot.val()
                 })
             }
         })
     }, [])
-
-    
 
     const onDelete = key => {
         if (window.confirm('Are you sure to delete this challenge?')) {
@@ -25,32 +21,39 @@ const ChallengeSection = (props) => {
                     if (err) console.log(err)
                 }
             )
-            props.setCurrentId(false);
         }
     }
 
     return (
         <div className="col-lg-8">
             {
-                Object.keys(challengeObjects).map(id => {
+                Object.keys(props.challengeObjects).reverse().filter((item) => {
+                    if (props.searchTerm === "") {
+                        return item;
+                    }
+                    else if (props.challengeObjects[item].title.toUpperCase().includes(props.searchTerm.toUpperCase().trim())) {
+                        return item;
+                    }
+                    return null;
+                }).map(id => {
                     return <div className="row" key={id}>
                         <div className="col-12">
                             <div className="card">
                                 <div className="filter">
                                     <a className="icon" data-bs-toggle="dropdown"><i className="bi bi-three-dots"></i></a>
                                     <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                        <li><a className="dropdown-item" onClick={() => { props.setCurrentId(id)}} data-bs-toggle="modal" data-bs-target="#postChallenge"><i className="bi bi-pencil"></i>Edit</a></li>
+                                        <li><a className="dropdown-item" onClick={() => { props.setCurrentId(id) }} data-bs-toggle="modal" data-bs-target="#postChallenge"><i className="bi bi-pencil"></i>Edit</a></li>
                                         <li><a className="dropdown-item" onClick={() => { onDelete(id) }}><i className="bi bi-trash"></i>Delete</a></li>
                                     </ul>
                                 </div>
                                 <ChallengeCard
                                     cardId={id}
-                                    updateCurrentId={(cid) => {props.setCurrentId(cid)}}
-                                    creator={challengeObjects[id].creator}
-                                    title={challengeObjects[id].title}
-                                    ideaCount={challengeObjects[id].ideaCount}
-                                    timeStamp={challengeObjects[id].timeStamp}
-                                    description={challengeObjects[id].description}
+                                    updateCurrentId={(cid) => { props.setCurrentId(cid) }}
+                                    creator={props.challengeObjects[id].creator}
+                                    title={props.challengeObjects[id].title}
+                                    ideaCount={props.challengeObjects[id].ideaCount}
+                                    timeStamp={props.challengeObjects[id].timeStamp}
+                                    description={props.challengeObjects[id].description}
                                 />
                             </div>
                         </div>

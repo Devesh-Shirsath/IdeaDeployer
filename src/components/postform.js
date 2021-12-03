@@ -3,27 +3,23 @@ import firebaseDb from "../firebase";
 
 function PostForm(props) {
     const initialFieldValues = {
+        userId: `${props.userId}`,
         creator: `${props.displayName}`,
         title: '',
         ideaCount: 0,
         description: '',
         timeStamp: ''
     }
-
     var [values, setValues] = useState(initialFieldValues);
-    var [counter, setCounter] = useState(0);
+
+    console.log(props.currentId);
     
     useEffect(() => {
-        if (props.currentId === false){
-            setValues({
-                ...initialFieldValues
-            })
-            firebaseDb.child(`users/${props.userId}/challenges/counter`).on('value', snapshot => {
-                if (snapshot.val != null) {
-                    setCounter(snapshot.val())
-                }
-            })
-        }
+        if (props.currentId === '')
+        setValues({
+            ...initialFieldValues
+        })
+        
         else {
             firebaseDb.child(`challenges/${props.currentId}`).on('value', snapshot => {
                 if (snapshot.val != null) {
@@ -33,42 +29,27 @@ function PostForm(props) {
                 }
             })
         }
-    }, [props.currentId])
-
-    const addVal = obj => {
+    }, [props.currentId,props.challengeObjects])
+    
+    const addOrEdit = obj => {
         var myCurrentDate = new Date();
-        var date = myCurrentDate.getFullYear() + '-' + (myCurrentDate.getMonth()+1) + '-' + myCurrentDate.getDate() +' '+ myCurrentDate.getHours()+':'+ myCurrentDate.getMinutes()+':'+ myCurrentDate.getSeconds();
+        var date = myCurrentDate.getFullYear() + '-' + (myCurrentDate.getMonth() + 1) + '-' + myCurrentDate.getDate() + ' ' + myCurrentDate.getHours() + ':' + myCurrentDate.getMinutes() + ':' + myCurrentDate.getSeconds();
         obj.timeStamp = date;
-        setCounter(counter+1);
-
-        if (props.currentId === false) {
-            firebaseDb.child(`challenges/${props.userId}${counter}`).set(
+        
+        if (props.currentId === '') {
+            firebaseDb.child('challenges').push(
+                obj,
+                err => {
+                    if (err) console.log(err)
+                }
+                )
+            } else {
+                firebaseDb.child(`challenges/${props.currentId}`).set(
                 obj,
                 err => {
                     if (err) console.log(err)
                 }
             )
-            firebaseDb.child(`users/${props.userId}/challenges/${props.userId}${counter}`).set(
-                obj,
-                err => {
-                    if (err) console.log(err)
-                }
-            )
-        }
-        else {
-            firebaseDb.child(`challenges/${props.currentId}`).set(
-                obj,
-                err => {
-                    if (err) console.log(err)
-                }
-            )
-            firebaseDb.child(`users/${props.userId}/challenges/${props.currentId}`).set(
-                obj,
-                err => {
-                    if (err) console.log(err)
-                }
-            )
-            props.setCurrentId(false)
         }
     }
 
@@ -79,19 +60,20 @@ function PostForm(props) {
             [name]: value
         })
     }
-
+    
     const handleFormSubmit = e => {
         e.preventDefault();
-        addVal(values);
+        addOrEdit(values);
     }
-
+    
+    console.log(values);
     return (
         <div className="modal fade" id="postChallenge" tabIndex="-1">
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">Post Challenge</h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => {props.setCurrentId(false)}}></button>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => { props.setCurrentId('') }}></button>
                     </div>
                     <div className="modal-body">
                         <form className="row g-3" autoComplete="off" onSubmit={handleFormSubmit}>
@@ -124,8 +106,8 @@ function PostForm(props) {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={() => {props.setCurrentId(false)}}>Discard</button>
-                                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Post</button>
+                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={() => { props.setCurrentId('') }}>Discard</button>
+                                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">{props.currentId === '' ? "Post" : "Update"}</button>
                             </div>
                         </form>
                     </div>

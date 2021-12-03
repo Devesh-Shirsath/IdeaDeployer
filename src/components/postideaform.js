@@ -1,29 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import firebaseDb from "../firebase";
 
 function PostIdeaForm(props) {
     const initialFieldValues = {
+        userId: `${props.userId}`,
         creator: `${props.displayName}`,
         title: '',
-        likes: 0,
-        description: ''
+        votes: 0,
+        description: '',
+        timeStamp: ''
     }
 
     var [values, setValues] = useState(initialFieldValues)
 
-    const addVal = obj => {
-        firebaseDb.child(`challenges/${props.currentId}/ideas`).push(
-            obj,
-            err => {
-                if (err) console.log(err)
-            }
-        )
-        firebaseDb.child(`users/${props.userId}/challenges/${props.currentId}/ideas`).push(
-            obj,
-            err => {
-                if (err) console.log(err)
-            }
-        )
+    useEffect(() => {
+        if (props.ideaId === '')
+        setValues({
+            ...initialFieldValues
+        })
+        
+        else {
+            firebaseDb.child(`challenges/${props.currentId}/ideas/${props.ideaId}`).on('value', snapshot => {
+                if (snapshot.val != null) {
+                    setValues({
+                        ...snapshot.val()
+                    })
+                }
+            })
+        }
+    }, [props.ideaId,props.challengeObjects])
+
+
+    const addOrEdit = obj => {
+        var myCurrentDate = new Date();
+        var date = myCurrentDate.getFullYear() + '-' + (myCurrentDate.getMonth() + 1) + '-' + myCurrentDate.getDate() + ' ' + myCurrentDate.getHours() + ':' + myCurrentDate.getMinutes() + ':' + myCurrentDate.getSeconds();
+        obj.timeStamp = date;
+        
+        if (props.ideaId === '') {
+            firebaseDb.child(`challenges/${props.currentId}/ideas`).push(
+                obj,
+                err => {
+                    if (err) console.log(err)
+                }
+                )
+            } else {
+                firebaseDb.child(`challenges/${props.currentId}/ideas/${props.ideaId}`).set(
+                obj,
+                err => {
+                    if (err) console.log(err)
+                }
+            )
+        }
     }
 
     const handleInputChange = e => {
@@ -36,7 +63,7 @@ function PostIdeaForm(props) {
 
     const handleFormSubmit = e => {
         e.preventDefault();
-        addVal(values);
+        addOrEdit(values);
     }
 
     return (
@@ -45,7 +72,7 @@ function PostIdeaForm(props) {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">Post Idea</h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => { props.setCurrentId('') }}></button>
                     </div>
                     <div className="modal-body">
                         <form className="row g-3" autoComplete="off" onSubmit={handleFormSubmit}>
@@ -60,7 +87,7 @@ function PostIdeaForm(props) {
                                         value={values.title}
                                         onChange={handleInputChange}
                                     />
-                                    <label htmlFor="floatingName">Idea Title</label>
+                                    <label htmlFor="floatingName">Title</label>
                                 </div>
                             </div>
                             <div className="col-12">
@@ -78,8 +105,8 @@ function PostIdeaForm(props) {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Discard</button>
-                                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Post</button>
+                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={() => { props.setCurrentId('') }}>Discard</button>
+                                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">{props.ideaId === '' ? "Post" : "Update"}</button>
                             </div>
                         </form>
                     </div>
