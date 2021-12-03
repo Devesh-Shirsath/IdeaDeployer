@@ -67,7 +67,7 @@ function App() {
                 <Routes>
                   <Route path="/" exact element={<ChallengeSection  {...({ currentId, setCurrentId, challengeObjects, setchallengeObjects, searchTerm })} />} />
                   <Route path="/vote_ideas" exact element={<VoteSection searchTerm={searchTerm} />} />
-                  <Route path="/:title/ideas" exact element={<SelectedChallengeIdeaSection searchTerm={searchTerm} />} />
+                  <Route path="/:title/ideas" exact element={<SelectedChallengeIdeaSection {...({ currentId, setCurrentId, challengeObjects, setchallengeObjects, searchTerm })} />} />
                   <Route path={`/users/:displayName/challenges`} exact element={<MyChallengeSection userId={userDetails.uid} {...({ currentId, setCurrentId, challengeObjects, setchallengeObjects , searchTerm})} />} />
                   <Route path={`/users/:displayName/execution`} exact element={<ExecutionSection searchTerm={searchTerm} />} />
                   <Route path="/contact" exact element={<Contact />} />

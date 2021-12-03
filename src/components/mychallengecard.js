@@ -16,7 +16,7 @@ function MyChallengeCard(props) {
 
       <div className="d-flex" style={{ justifyContent: "flex-end" }}>
         <div>
-          <Link className="btn btn-light" to={`/${props.title}/ideas`}>See Ideas</Link>
+          <Link className="btn btn-light" to={`/${props.title}/ideas`} onClick={() => { props.updateCurrentId(props.cardId) }}>See Ideas</Link>
         </div>
       </div>
     </div>
