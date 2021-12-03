@@ -38,44 +38,44 @@ function HeroPage(props) {
         <div className="container position-relative">
           <div className="row justify-content-center">
             <div className="col-xl-7 col-lg-9 text-center">
-              <h1>One Page Bootstrap Website Template</h1>
-              <h2>We are team of talented designers</h2>
+              <h1>Now your team can Ideate, Vote, and Execute.</h1>
+              <h2>Vote out the best idea for any challenge and start executing it using Planner.</h2>
             </div>
           </div>
           <div className="text-center">
-            <a onClick={signInWithGoogle} className="btn-get-started scrollto" style={{cursor:"pointer"}}>Sign Up</a>
+            <a onClick={signInWithGoogle} className="btn-get-started scrollto" style={{cursor:"pointer"}}>Get Started!</a>
           </div>
 
           <div className="row icon-boxes">
             <div className="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
               <div className="icon-box">
                 <div className="icon"><i className="ri-stack-line"></i></div>
-                <h4 className="title"><a>Lorem Ipsum</a></h4>
-                <p className="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+                <h4 className="title"><a>Explore</a></h4>
+                <p className="description">Productive exploration comes through collaborative brainstorming. Planner lets the users post challenges where other users can post their ideas.</p>
               </div>
             </div>
 
             <div className="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
               <div className="icon-box">
                 <div className="icon"><i className="ri-palette-line"></i></div>
-                <h4 className="title"><a>Sed ut perspiciatis</a></h4>
-                <p className="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+                <h4 className="title"><a>Ideate</a></h4>
+                <p className="description">Best solution is an outcome of intensive ideation for any challenge. More ideas, better solution it will be.</p>
               </div>
             </div>
 
             <div className="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
               <div className="icon-box">
                 <div className="icon"><i className="ri-command-line"></i></div>
-                <h4 className="title"><a>Magni Dolores</a></h4>
-                <p className="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
+                <h4 className="title"><a>Vote</a></h4>
+                <p className="description">Voting helps challengers by letting them see the best ideas, and helps them plan the execution phase easily</p>
               </div>
             </div>
 
             <div className="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
               <div className="icon-box">
                 <div className="icon"><i className="ri-fingerprint-line"></i></div>
-                <h4 className="title"><a>Nemo Enim</a></h4>
-                <p className="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+                <h4 className="title"><a>Execute</a></h4>
+                <p className="description">Now that the challengers know whats the scope of the problem and whats the best suitable idea for it, they can easily execute the idea.</p>
               </div>
             </div>
 
