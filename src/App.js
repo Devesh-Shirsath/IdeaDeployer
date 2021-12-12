@@ -13,7 +13,8 @@ import PostIdeaForm from './components/postideaform';
 import HeroPage from './SignUpCheck/HeroPage';
 import { firebase } from './firebase';
 import VoteSection from './components/votesection';
-import SelectedChallengeIdeaSection from './components/selectedchallengeideasection';
+import IdeaSection from './components/ideasection';
+import MyIdeaSection from './components/myideasection';
 
 function App() {
   const [userDetails, setUserDetails] = useState({
@@ -65,10 +66,11 @@ function App() {
             <section className="section dashboard profile">
               <div className="row">
                 <Routes>
-                  <Route path="/" exact element={<ChallengeSection  {...({ currentId, setCurrentId, challengeObjects, setchallengeObjects, searchTerm })} />} />
-                  <Route path="/vote_ideas" exact element={<VoteSection searchTerm={searchTerm} />} />
-                  <Route path="/:title/ideas" exact element={<SelectedChallengeIdeaSection {...({ currentId, setCurrentId, challengeObjects, setchallengeObjects, searchTerm })} />} />
+                  <Route path="/" exact element={<ChallengeSection userId={userDetails.uid} {...({ currentId, setCurrentId, challengeObjects, setchallengeObjects, searchTerm })} />} />
+                  <Route path="/vote_ideas" exact element={<VoteSection userId={userDetails.uid} {...({ currentId, setCurrentId, challengeObjects, setchallengeObjects, searchTerm })} />} />
+                  <Route path="/:title/ideas" exact element={<IdeaSection userId={userDetails.uid} {...({ currentId, setCurrentId, challengeObjects, setchallengeObjects, searchTerm })} />} />
                   <Route path={`/users/:displayName/challenges`} exact element={<MyChallengeSection userId={userDetails.uid} {...({ currentId, setCurrentId, challengeObjects, setchallengeObjects , searchTerm})} />} />
+                  <Route path={`/users/:displayName/ideas`} exact element={<MyIdeaSection userId={userDetails.uid} {...({ currentId, setCurrentId, challengeObjects, setchallengeObjects , searchTerm})} />} />
                   <Route path={`/users/:displayName/execution`} exact element={<ExecutionSection searchTerm={searchTerm} />} />
                   <Route path="/contact" exact element={<Contact />} />
                 </Routes>

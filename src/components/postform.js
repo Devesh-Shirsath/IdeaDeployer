@@ -11,8 +11,6 @@ function PostForm(props) {
         timeStamp: ''
     }
     var [values, setValues] = useState(initialFieldValues);
-
-    console.log(props.currentId);
     
     useEffect(() => {
         if (props.currentId === '')
@@ -66,7 +64,6 @@ function PostForm(props) {
         addOrEdit(values);
     }
     
-    console.log(values);
     return (
         <div className="modal fade" id="postChallenge" tabIndex="-1">
             <div className="modal-dialog">

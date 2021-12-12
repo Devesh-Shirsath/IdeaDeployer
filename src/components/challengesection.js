@@ -39,7 +39,7 @@ const ChallengeSection = (props) => {
                     return <div className="row" key={id}>
                         <div className="col-12">
                             <div className="card">
-                                <div className="filter">
+                                <div className="filter" style={{display: props.userId !== props.challengeObjects[id].userId && "none"}}>
                                     <a className="icon" data-bs-toggle="dropdown"><i className="bi bi-three-dots"></i></a>
                                     <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                         <li><a className="dropdown-item" onClick={() => { props.setCurrentId(id) }} data-bs-toggle="modal" data-bs-target="#postChallenge"><i className="bi bi-pencil"></i>Edit</a></li>

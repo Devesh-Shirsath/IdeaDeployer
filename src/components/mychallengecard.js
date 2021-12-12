@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function MyChallengeCard(props) {
   return (
     <div className="card-body">
-      <h5 className="card-title">{props.title}  <span className="text-danger small pt-1 fw-bold"> • Live</span> <span> <br />Challenge • {props.timeStamp} • {props.ideaCount} ideas</span></h5>
+      <h5 className="card-title">{props.title}  <span> <br />Challenge • {props.timeStamp} • {props.ideaCount} ideas</span></h5>
 
       <div className="d-flex align-items-center">
         <div className="ps-1">
