@@ -29,7 +29,15 @@ const MyIdeaSection = (props) => {
             {
                 Object.keys(props.challengeObjects).reverse().map(id => {
                     if (props.challengeObjects[id].ideas !== undefined)
-                        return Object.keys(props.challengeObjects[id].ideas).reverse().map(iid => {
+                        return Object.keys(props.challengeObjects[id].ideas).reverse().filter((item) => {
+                            if (props.searchTerm === "") {
+                                return item;
+                            }
+                            else if (props.challengeObjects[id].ideas[item].title.toUpperCase().includes(props.searchTerm.toUpperCase().trim())) {
+                                return item;
+                            }
+                            return null;
+                        }).map(iid => {
                             if (props.userId === props.challengeObjects[id].ideas[iid].userId)
                                 return <div className="row" key={iid}>
                                     <div className="col-12">
