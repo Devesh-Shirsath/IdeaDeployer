@@ -44,7 +44,7 @@ function Sidebar(props) {
         </li>
 
         <li className="nav-item">
-          <Link className="nav-link collapsed" to={`/users/${props.displayName}/execution`}>
+          <Link className="nav-link collapsed" to={`/executing`}>
             <i className="bi bi-nut"></i>
             <span>Under Execution</span>
           </Link>

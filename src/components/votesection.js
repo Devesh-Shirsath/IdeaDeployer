@@ -51,7 +51,7 @@ const VoteSection = (props) => {
                                     updateCurrentId={(cid) => { props.setCurrentId(cid) }}
                                     creator={props.challengeObjects[id].creator}
                                     title={props.challengeObjects[id].title}
-                                    ideaCount={props.challengeObjects[id].ideaCount}
+                                    ideaCount={props.challengeObjects[id].ideas === undefined ? 0 : Object.keys(props.challengeObjects[id].ideas).length}
                                     timeStamp={props.challengeObjects[id].timeStamp}
                                     description={props.challengeObjects[id].description}
                                 />

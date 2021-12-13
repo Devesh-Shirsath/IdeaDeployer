@@ -3,7 +3,7 @@ import firebaseDb from "../firebase";
 import IdeaCard from "./ideacard";
 
 const IdeaSection = (props) => {
-    var [challegeCreatorId, setChallegeCreatorId] = useState({userId: ''});
+    var [challegeCreatorId, setChallegeCreatorId] = useState({ userId: '', cname: '', ctitle: '', cdescription: '' });
 
     useEffect(() => {
         props.setchallengeObjects({});
@@ -17,15 +17,43 @@ const IdeaSection = (props) => {
         firebaseDb.child(`challenges/${props.currentId}`).on('value', snapshot => {
             if (snapshot.val() != null) {
                 setChallegeCreatorId({
-                    userId: snapshot.val().userId
+                    userId: snapshot.val().userId,
+                    cname: snapshot.val().creator,
+                    ctitle: snapshot.val().title,
+                    cdescription: snapshot.val().description
                 })
             }
         })
     }, [])
 
+    const Execute = (iititle, iidescription) => {
+        const obj = {
+            userId: `${challegeCreatorId.userId}`,
+            cname: `${challegeCreatorId.cname}`,
+            ctitle: `${challegeCreatorId.ctitle}`,
+            cdescription: `${challegeCreatorId.cdescription}`,
+            ititle: `${iititle}`,
+            idescription: `${iidescription}`
+        }
+
+        firebaseDb.child('execute').push(
+            obj,
+            err => {
+                if (err) console.log(err)
+            }
+        )
+        firebaseDb.child(`challenges/${props.currentId}`).remove(
+            err => {
+                if (err) console.log(err)
+            }
+        )
+        props.setIdeaId('');
+        props.setCurrentId('');
+    }
+
     const onDelete = key => {
-        if (window.confirm('Are you sure to delete this challenge?')) {
-            firebaseDb.child(`challenges/${key}`).remove(
+        if (window.confirm('Are you sure to delete this idea?')) {
+            firebaseDb.child(`challenges/${props.currentId}/ideas/${key}`).remove(
                 err => {
                     if (err) console.log(err)
                 }
@@ -49,10 +77,10 @@ const IdeaSection = (props) => {
                         <div className="col-12">
                             <div className="card">
                                 <div className="filter">
-                                    <i className="icon bi bi-heart" ></i>
+                                    <i className="icon bi bi-heart"></i>
                                     <a className="icon" data-bs-toggle="dropdown" style={{ display: props.userId !== props.challengeObjects[id].userId && "none" }}><i className="bi bi-three-dots"></i></a>
                                     <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style={{ display: props.userId !== props.challengeObjects[id].userId && "none" }}>
-                                        <li><a className="dropdown-item" onClick={() => { props.setCurrentId(id) }} data-bs-toggle="modal" data-bs-target="#postIdea"><i className="bi bi-pencil"></i>Edit</a></li>
+                                        <li><a className="dropdown-item" onClick={() => { props.setIdeaId(id) }} data-bs-toggle="modal" data-bs-target="#postIdea"><i className="bi bi-pencil"></i>Edit</a></li>
                                         <li><a className="dropdown-item" onClick={() => { onDelete(id) }}><i className="bi bi-trash"></i>Delete</a></li>
                                     </ul>
                                 </div>
@@ -64,6 +92,7 @@ const IdeaSection = (props) => {
                                     votes={props.challengeObjects[id].votes}
                                     timeStamp={props.challengeObjects[id].timeStamp}
                                     description={props.challengeObjects[id].description}
+                                    execute={(t, d) => { Execute(t, d) }}
                                 />
                             </div>
                         </div>

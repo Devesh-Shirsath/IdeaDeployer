@@ -2,15 +2,12 @@ import React, { useState, useEffect } from "react";
 import ExecutionCard from "./executioncard";
 import firebaseDb from "../firebase";
 
-const ExecutionSection = () => {
-
+const ExecutionSection = (props) => {
     var [executionObjects, setexecutionObjects] = useState({})
-    var [currentId, setCurrentId] = useState('')
 
     useEffect(() => {
-        firebaseDb.child(`execution/Jyotiraj`).on('value', snapshot => {
+        firebaseDb.child(`execute`).on('value', snapshot => {
             if (snapshot.val != null) {
-                console.log(snapshot.val())
                 setexecutionObjects({
                     ...snapshot.val()
                 })
@@ -18,47 +15,40 @@ const ExecutionSection = () => {
         })
     }, [])
 
-    const editVal = obj => {
-        firebaseDb.child(`execution/Jyotiraj/${currentId}`).set(
-            obj,
-            err => {
-                if (err) console.log(err)
-                else setCurrentId('')
-            }
-        )
-    }
-
     const onDelete = key => {
         if (window.confirm('Are you sure to delete this record?')) {
-            firebaseDb.child(`execution/Jyotiraj/${key}`).remove(
+            firebaseDb.child(`execute/${key}`).remove(
                 err => {
                     if (err) console.log(err)
-                    else setCurrentId('')
                 }
             )
         }
     }
-
+console.log(executionObjects)
     return (
         <div className="col-lg-8">
             {
-                Object.keys(executionObjects).map(id => {
+                Object.keys(executionObjects).reverse().filter((item) => {
+                    if (props.searchTerm === "") {
+                        return item;
+                    }
+                    else if (props.executionObjects.ctitle.toUpperCase().includes(props.searchTerm.toUpperCase().trim())) {
+                        return item;
+                    }
+                    return null;
+                }).map(id => {
                     return <div className="row" key={id}>
                         <div className="col-12">
                             <div className="card">
                                 <div className="filter">
-                                    <i className="icon bi bi-heart"></i>
-                                    <a className="icon" data-bs-toggle="dropdown"><i className="bi bi-three-dots"></i></a>
-                                    <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                        <li><a className="dropdown-item" onClick={() => { setCurrentId(id) }}><i className="bi bi-pencil"></i>Edit</a></li>
-                                        <li><a className="dropdown-item" onClick={() => { onDelete(id) }}><i className="bi bi-trash"></i>Delete</a></li>
-                                    </ul>
+                                    <i className="icon bi bi-trash text-danger" onClick={() => { onDelete(id) }}></i>
                                 </div>
                                 <ExecutionCard
-                                    title={executionObjects[id].title}
-                                    description={executionObjects[id].description}
-                                    ideaSelected={executionObjects[id].ideaSelected}
-                                    status={executionObjects[id].status}
+                                    cname= {executionObjects[id].cname}
+                                    ctitle= {executionObjects[id].ctitle}
+                                    cdescription= {executionObjects[id].cdescription}
+                                    ititle= {executionObjects[id].ititle}
+                                    idescription= {executionObjects[id].idescription}
                                 />
                             </div>
                         </div>

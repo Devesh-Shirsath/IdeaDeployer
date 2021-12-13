@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function IdeaCard(props) {
     return (
@@ -16,10 +17,10 @@ function IdeaCard(props) {
                     </span>
                 </div>
             </div>
-            
+
             <div className="d-flex" style={{ justifyContent: "flex-end" , display: props.userId === props.creatorId && "none" }}>
                 <div style={{ display: props.userId !== props.creatorId && "none" }}>
-                    <button type="button" className="btn btn-light" data-bs-toggle="modal" data-bs-target="#postIdea" onClick={() => { props.updateCurrentId(props.cardId) }} style={{ display: props.userId !== props.creatorId && "none" }}>Execute</button>
+                    <Link type="button" className="btn btn-light" to={`/vote_ideas`} onClick={() => { props.execute(props.title, props.description) }} style={{ display: props.userId !== props.creatorId && "none" }}>Execute</Link>
                 </div>
             </div>
         </div>

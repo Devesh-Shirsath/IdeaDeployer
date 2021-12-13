@@ -72,7 +72,7 @@ function PostIdeaForm(props) {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">Post Idea</h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => { props.setCurrentId('') }}></button>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => { props.setIdeaId('') }}></button>
                     </div>
                     <div className="modal-body">
                         <form className="row g-3" autoComplete="off" onSubmit={handleFormSubmit}>
@@ -105,7 +105,7 @@ function PostIdeaForm(props) {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={() => { props.setCurrentId('') }}>Discard</button>
+                                <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={() => { props.setIdeaId('') }}>Discard</button>
                                 <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">{props.ideaId === '' ? "Post" : "Update"}</button>
                             </div>
                         </form>
