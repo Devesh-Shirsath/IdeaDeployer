@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import firebaseDb from "../firebase";
 import IdeaCard from "./ideacard";
 
@@ -63,6 +64,13 @@ const IdeaSection = (props) => {
 
     return (
         <div className="col-lg-8">
+            <nav>
+                <ol className="breadcrumb">
+                    <li className="breadcrumb-item"><Link to="/">Challenges</Link></li>
+                    <li className="breadcrumb-item"><Link to="/vote_ideas">Voting</Link></li>
+                    <li className="breadcrumb-item active">{challegeCreatorId.ctitle}</li>
+                </ol>
+            </nav>
             {
                 Object.keys(props.challengeObjects).reverse().filter((item) => {
                     if (props.searchTerm === "") {
@@ -77,7 +85,7 @@ const IdeaSection = (props) => {
                         <div className="col-12">
                             <div className="card">
                                 <div className="filter">
-                                    <i className="icon bi bi-heart"></i>
+                                    <i className="icon bi bi-heart-fill"></i>
                                     <a className="icon" data-bs-toggle="dropdown" style={{ display: props.userId !== props.challengeObjects[id].userId && "none" }}><i className="bi bi-three-dots"></i></a>
                                     <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style={{ display: props.userId !== props.challengeObjects[id].userId && "none" }}>
                                         <li><a className="dropdown-item" onClick={() => { props.setIdeaId(id) }} data-bs-toggle="modal" data-bs-target="#postIdea"><i className="bi bi-pencil"></i>Edit</a></li>

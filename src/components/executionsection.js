@@ -24,7 +24,7 @@ const ExecutionSection = (props) => {
             )
         }
     }
-console.log(executionObjects)
+
     return (
         <div className="col-lg-8">
             {
