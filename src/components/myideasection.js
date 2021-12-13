@@ -26,6 +26,11 @@ const MyIdeaSection = (props) => {
 
     return (
         <div className="col-lg-8">
+            <nav>
+                <ol className="breadcrumb">
+                    <li className="breadcrumb-item active">My Ideas</li>
+                </ol>
+            </nav>
             {
                 Object.keys(props.challengeObjects).reverse().map(id => {
                     if (props.challengeObjects[id].ideas !== undefined)

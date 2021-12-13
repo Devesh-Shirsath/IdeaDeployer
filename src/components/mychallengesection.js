@@ -26,6 +26,11 @@ const MyChallengeSection = (props) => {
 
     return (
         <div className="col-lg-8">
+            <nav>
+                <ol className="breadcrumb">
+                    <li className="breadcrumb-item active">My Challenges</li>
+                </ol>
+            </nav>
             {
                 Object.keys(props.challengeObjects).reverse().filter((item) => {
                     if (props.searchTerm === "") {

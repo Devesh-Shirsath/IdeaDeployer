@@ -3,6 +3,11 @@ import React from 'react';
 function Contact() {
     return (
         <div className="col-lg-8">
+            <nav>
+                <ol className="breadcrumb">
+                    <li className="breadcrumb-item active">Contacts</li>
+                </ol>
+            </nav>
             <div className="card">
                 <div className="card-body profile-card pt-4 d-flex flex-column align-items-center">
 

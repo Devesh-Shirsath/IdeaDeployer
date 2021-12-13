@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import firebaseDb from "../firebase";
 import VoteCard from "./votecard";
 
@@ -26,6 +27,12 @@ const VoteSection = (props) => {
 
     return (
         <div className="col-lg-8">
+            <nav>
+                <ol className="breadcrumb">
+                    <li className="breadcrumb-item"><Link to="/">Challenges</Link></li>
+                    <li className="breadcrumb-item active">Voting</li>
+                </ol>
+            </nav>
             {
                 Object.keys(props.challengeObjects).reverse().filter((item) => {
                     if (props.searchTerm === "") {
