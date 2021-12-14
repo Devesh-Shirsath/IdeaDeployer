@@ -37,7 +37,7 @@ class Navbar extends React.Component {
                 </div>
 
                 <div className="search-bar">
-                    <form className="search-form d-flex align-items-center" method="POST" action="#">
+                    <form className="search-form d-flex align-items-center" autoComplete="off">
                         <input type="text" name="query" placeholder="Search" title="Enter search keyword" onChange={(event) => this.props.setSearchTerm(event.target.value)} />
                         <button type="submit" title="Search"><i className="bi bi-search"></i></button>
                     </form>

@@ -40,7 +40,7 @@ function App() {
 
   useEffect(() => {
     setLoading(false);
-  })
+  },[])
 
   if (loading === true) {
     return (

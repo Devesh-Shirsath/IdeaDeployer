@@ -5,6 +5,7 @@ import IdeaCard from "./ideacard";
 
 const IdeaSection = (props) => {
     var [challegeCreatorId, setChallegeCreatorId] = useState({ userId: '', cname: '', ctitle: '', cdescription: '' });
+    var [toggle, setToggle]= useState(true);
 
     useEffect(() => {
         props.setchallengeObjects({});
@@ -98,7 +99,7 @@ const IdeaSection = (props) => {
                         <div className="col-12">
                             <div className="card">
                                 <div className="filter">
-                                    <i className="icon bi bi-heart-fill"></i>
+                                    <i className={toggle ? "icon bi bi-heart-fill" : "icon bi bi-heart" } onClick={() => { setToggle(!toggle) }}></i>
                                     <a className="icon" data-bs-toggle="dropdown" style={{ display: props.userId !== props.challengeObjects[id].userId && "none" }}><i className="bi bi-three-dots"></i></a>
                                     <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow" style={{ display: props.userId !== props.challengeObjects[id].userId && "none" }}>
                                         <li><a className="dropdown-item" onClick={() => { props.setIdeaId(id) }} data-bs-toggle="modal" data-bs-target="#postIdea"><i className="bi bi-pencil"></i>Edit</a></li>
