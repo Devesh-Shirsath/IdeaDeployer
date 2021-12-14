@@ -37,7 +37,7 @@ const ExecutionSection = (props) => {
                     if (props.searchTerm === "") {
                         return item;
                     }
-                    else if (props.executionObjects.ctitle.toUpperCase().includes(props.searchTerm.toUpperCase().trim())) {
+                    else if (executionObjects[item].ctitle.toUpperCase().includes(props.searchTerm.toUpperCase().trim())) {
                         return item;
                     }
                     return null;

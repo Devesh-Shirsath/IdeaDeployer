@@ -35,7 +35,18 @@ function PostIdeaForm(props) {
         var myCurrentDate = new Date();
         var date = myCurrentDate.getFullYear() + '-' + (myCurrentDate.getMonth() + 1) + '-' + myCurrentDate.getDate() + ' ' + myCurrentDate.getHours() + ':' + myCurrentDate.getMinutes() + ':' + myCurrentDate.getSeconds();
         obj.timeStamp = date;
-        
+        var updt = {
+            creator: obj.creator,
+            type: 'Idea',
+            title: obj.title,
+            timeStamp: `${date}`
+        }
+        firebaseDb.child('updates').push(
+            updt,
+            err => {
+                if (err) console.log(err)
+            }
+        )
         if (props.ideaId === '') {
             firebaseDb.child(`challenges/${props.currentId}/ideas`).push(
                 obj,

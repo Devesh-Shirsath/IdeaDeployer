@@ -1,75 +1,41 @@
 import React, { useState, useEffect } from "react";
+import firebaseDb from "../firebase";
 
 function Rightsidebar() {
+    var [updates, setUpdates] = useState({})
+
+    useEffect(() => {
+        firebaseDb.child('updates').on('value', snapshot => {
+            if (snapshot.val() != null) {
+                setUpdates({
+                    ...snapshot.val()
+                })
+            }
+        })
+    }, [])
+
     return (
         <div className="col-lg-4">
             <div className="card">
-                <div className="filter">
-                    <a className="icon" href="#" data-bs-toggle="dropdown"><i className="bi bi-three-dots"></i></a>
-                    <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        <li className="dropdown-header text-start">
-                            <h6>Filter</h6>
-                        </li>
-
-                        <li><a className="dropdown-item" href="#">Today</a></li>
-                        <li><a className="dropdown-item" href="#">This Month</a></li>
-                        <li><a className="dropdown-item" href="#">This Year</a></li>
-                    </ul>
-                </div>
-
                 <div className="card-body">
                     <h5 className="card-title">Recent Activity <span>| Today</span></h5>
 
                     <div className="activity">
-
-                        <div className="activity-item d-flex">
-                            <div className="activite-label">32 min</div>
-                            <i className='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                            <div className="activity-content">
-                                Quia quae rerum <a href="#" className="fw-bold text-dark">explicabo officiis</a> beatae
-                            </div>
-                        </div>
-
-                        <div className="activity-item d-flex">
-                            <div className="activite-label">56 min</div>
-                            <i className='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
-                            <div className="activity-content">
-                                Voluptatem blanditiis blanditiis eveniet
-                            </div>
-                        </div>
-
-                        <div className="activity-item d-flex">
-                            <div className="activite-label">2 hrs</div>
-                            <i className='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
-                            <div className="activity-content">
-                                Voluptates corrupti molestias voluptatem
-                            </div>
-                        </div>
-
-                        <div className="activity-item d-flex">
-                            <div className="activite-label">1 day</div>
-                            <i className='bi bi-circle-fill activity-badge text-info align-self-start'></i>
-                            <div className="activity-content">
-                                Tempore autem saepe <a href="#" className="fw-bold text-dark">occaecati voluptatem</a> tempore
-                            </div>
-                        </div>
-
-                        <div className="activity-item d-flex">
-                            <div className="activite-label">2 days</div>
-                            <i className='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
-                            <div className="activity-content">
-                                Est sit eum reiciendis exercitationem
-                            </div>
-                        </div>
-
-                        <div className="activity-item d-flex">
-                            <div className="activite-label">4 weeks</div>
-                            <i className='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
-                            <div className="activity-content">
-                                Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
-                            </div>
-                        </div>
-
+                        {
+                            Object.keys(updates).reverse().map(id => {
+                                var myCurrentDate = new Date();
+                                var date = myCurrentDate.getFullYear() + '-' + (myCurrentDate.getMonth() + 1) + '-' + myCurrentDate.getDate();
+                                if (updates[id].timeStamp.includes(date)) {
+                                    return <div className="activity-item d-flex" key={id}>
+                                        <div className="activite-label">{updates[id].timeStamp.split(' ')[1]}</div>
+                                        <i className='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
+                                        <div className="activity-content">
+                                            {updates[id].type === 'Executing' ? "Executing Challenge" : updates[id].type} <a className="fw-bold text-dark">{updates[id].title}</a> Posted by <a className="fw-bold text-muted">{updates[id].creator}</a>
+                                        </div>
+                                    </div>
+                                }
+                            })
+                        }
                     </div>
 
                 </div>

@@ -36,7 +36,20 @@ const IdeaSection = (props) => {
             ititle: `${iititle}`,
             idescription: `${iidescription}`
         }
-
+        var myCurrentDate = new Date();
+        var date = myCurrentDate.getFullYear() + '-' + (myCurrentDate.getMonth() + 1) + '-' + myCurrentDate.getDate() + ' ' + myCurrentDate.getHours() + ':' + myCurrentDate.getMinutes() + ':' + myCurrentDate.getSeconds();
+        var updt = {
+            creator: obj.cname,
+            type: 'Executing',
+            title: obj.ctitle,
+            timeStamp: `${date}`
+        }
+        firebaseDb.child('updates').push(
+            updt,
+            err => {
+                if (err) console.log(err)
+            }
+        )
         firebaseDb.child('execute').push(
             obj,
             err => {
