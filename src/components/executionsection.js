@@ -16,6 +16,20 @@ const ExecutionSection = (props) => {
     }, [])
 
     const onDelete = key => {
+        var myCurrentDate = new Date();
+        var date = myCurrentDate.getFullYear() + '-' + (myCurrentDate.getMonth() + 1) + '-' + myCurrentDate.getDate() + ' ' + myCurrentDate.getHours() + ':' + myCurrentDate.getMinutes() + ':' + myCurrentDate.getSeconds();
+        var updt = {
+            creator: executionObjects[key].cname,
+            type: 'Execution Done',
+            title: executionObjects[key].ctitle,
+            timeStamp: `${date}`
+        }
+        firebaseDb.child('updates').push(
+            updt,
+            err => {
+                if (err) console.log(err)
+            }
+        )
         if (window.confirm('Are you sure to delete this record?')) {
             firebaseDb.child(`execute/${key}`).remove(
                 err => {
