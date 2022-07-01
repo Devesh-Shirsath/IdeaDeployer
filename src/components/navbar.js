@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { firebase } from '../firebase';
 
 class Navbar extends React.Component {
@@ -30,9 +31,9 @@ class Navbar extends React.Component {
 
 
                 <div className="d-flex align-items-center justify-content-between">
-                    <a href="index.html" className="logo d-flex align-items-center">
+                    <Link to="/" className="logo d-flex align-items-center">
                         <img src="/assets/planner_logo.png" alt="Planner" />
-                    </a>
+                    </Link>
                     <i className="bi bi-list toggle-sidebar-btn" onClick={this.toggleCheck}></i>
                 </div>
 
